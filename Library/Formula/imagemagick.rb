@@ -75,7 +75,10 @@ class Imagemagick < Formula
 
   def install
     args = [ "--disable-osx-universal-binary",
-             "--without-perl", # I couldn't make this compile
+             "--with-perl=/usr/bin/perl", #JK 2012-10-22
+       "--with-perl-options=PREFIX=/usr/local", #JK 2012-10-22
+	     "--with-magick-plus-plus", #JK 2012-10-22
+	     "--with-gslib", #JK 2012-10-22
              "--prefix=#{prefix}",
              "--disable-dependency-tracking",
              "--enable-shared",
@@ -86,10 +89,10 @@ class Imagemagick < Formula
 
     args << "--disable-openmp" unless build.include? 'enable-openmp'
     args << "--disable-opencl" if build.include? 'disable-opencl'
-    args << "--without-gslib" unless build.include? 'with-ghostscript'
-    args << "--with-gs-font-dir=#{HOMEBREW_PREFIX}/share/ghostscript/fonts" \
-                unless ghostscript_srsly? or ghostscript_fonts?
-    args << "--without-magick-plus-plus" if build.include? 'without-magick-plus-plus'
+#    args << "--without-gslib" unless build.include? 'with-ghostscript'
+#    args << "--with-gs-font-dir=#{HOMEBREW_PREFIX}/share/ghostscript/fonts" \
+#                unless ghostscript_srsly? or ghostscript_fonts?
+#    args << "--without-magick-plus-plus" if build.include? 'without-magick-plus-plus'
     args << "--enable-hdri=yes" if build.include? 'enable-hdri'
 
     if build.include? 'with-quantum-depth-32'
